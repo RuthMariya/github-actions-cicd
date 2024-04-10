@@ -9,7 +9,7 @@ EXPOSE 8080
 # Set the working directory
 
 
-COPY staging/*.jar app.jar
+COPY /home/runner/work/github-actions/github-actions/staging/artifact/*.jar app.jar
 
 RUN chmod +755 -R /app
 
