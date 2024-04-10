@@ -47,10 +47,10 @@ jobs:
        - name: List downloaded artifacts
          run: |
            ls -lrt staging
-       - name: Copy artifact to Docker build context
-         run: |
-           cp -R staging .
-           ls -lrt
+       # - name: Copy artifact to Docker build context
+       #   run: |
+       #     cp -R staging .
+       #     ls -lrt
        - name: docker login
          uses: docker/login-action@v1
          with:
