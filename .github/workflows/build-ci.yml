@@ -30,6 +30,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         path: staging 
+        retention-days: 5
     
 
   docker-build:
