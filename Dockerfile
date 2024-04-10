@@ -9,8 +9,8 @@ EXPOSE 8080
 # Set the working directory
 
 
-COPY staging/target/*.jar app.jar
+COPY staging/*.jar app.jar
 
 RUN chmod +755 -R /app
 
-CMD ["java", "-jar", "/app/app.jar"]
+CMD ["java", "-jar", "app.jar"]
