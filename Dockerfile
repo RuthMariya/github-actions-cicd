@@ -11,6 +11,6 @@ EXPOSE 8080
 
 COPY staging/artifact/*.jar app.jar
 
-RUN chmod +755 -R /app
+RUN chmod +755 -R app.jar
 
 CMD ["java", "-jar", "app.jar"]
