@@ -57,7 +57,7 @@ jobs:
 
        - name: List downloaded artifacts
          run: |
-           ls -lrt staging
+           ls -lrt && pwd
        # - name: Copy artifact to Docker build context
        #   run: |
        #     cp -R staging .
