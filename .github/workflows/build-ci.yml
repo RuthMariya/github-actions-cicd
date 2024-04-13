@@ -31,7 +31,7 @@ jobs:
       id: artifact-upload-step
       with:
         path: staging 
-        retention-days: 5
+        retention-days: 1
 
     - name: Output artifact ID
       run:  echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-id }}'
@@ -57,7 +57,7 @@ jobs:
 
        - name: List downloaded artifacts
          run: |
-           ls -lrt staging/ 
+           ls -lrt staging/artifact/
        # - name: Copy artifact to Docker build context
        #   run: |
        #     cp -R staging .
