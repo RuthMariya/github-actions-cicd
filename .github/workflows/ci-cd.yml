@@ -167,10 +167,12 @@ jobs:
             image: ruth99/github-actions-pet-clinic:${{ github.sha }}
             args: --file=Dockerfile --severity-threshold=high --sarif-file-output=snyk.sarif
          env:
-              SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+              SNYK_TOKEN: ${{ secrets.SNYK_AUTH_TOKEN }}
 
        - name: Upload Snyk report as sarif
          uses: github/codeql-action/upload-sarif@v2
+         env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
          with:
               sarif_file: snyk.sarif
 
