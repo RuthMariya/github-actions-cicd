@@ -93,9 +93,10 @@ jobs:
     runs-on: ubuntu-latest
     # needs: SAST-Scan
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Set execute permission for mvnw
         run: chmod +x mvnw
-      - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
         # run : chmod +x mvnw
         uses: snyk/actions/maven@master
