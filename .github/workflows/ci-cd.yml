@@ -171,12 +171,17 @@ jobs:
          env:
               SNYK_TOKEN: ${{ secrets.SNYK_AUTH_TOKEN }}
 
-       - name: Upload Snyk report as sarif
-         uses: github/codeql-action/upload-sarif@v2
-         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+       # - name: Upload Snyk report as sarif
+       #   uses: github/codeql-action/upload-sarif@v2
+       #   env:
+       #    SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+       #   with:
+       #        sarif_file: snyk.sarif
+       - name: Upload JAR artifact
+         uses: actions/upload-artifact@v2
          with:
-              sarif_file: snyk.sarif
+          path: snyk.sarif
+          retention-days: 3
 
 
   
