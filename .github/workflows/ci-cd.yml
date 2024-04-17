@@ -177,9 +177,10 @@ jobs:
        #    SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
        #   with:
        #        sarif_file: snyk.sarif
-       - name: Upload JAR artifact
+       - name: Upload image scan result 
          uses: actions/upload-artifact@v2
          with:
+          name: snyk-image-scan-result
           path: snyk.sarif
           retention-days: 3
 
