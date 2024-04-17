@@ -116,14 +116,14 @@ jobs:
        - name: Checkout code
          uses: actions/checkout@v2
          
-       - name: Download JAR artifact
-         uses: actions/download-artifact@v2
-         with:
-          path: staging
+       # - name: Download JAR artifact
+       #   uses: actions/download-artifact@v2
+       #   with:
+       #    path: staging
 
-       - name: List downloaded artifacts
-         run: |
-           ls -lrt staging
+       # - name: List downloaded artifacts
+       #   run: |
+       #     ls -lrt staging
 
       
 
