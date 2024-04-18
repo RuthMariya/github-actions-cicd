@@ -25,13 +25,13 @@ persistentVolume:
 
 
 image:
-  repository: gbsartifactory.edst.ibm.com/internet-banking/pet-clinic
+  repository: docker.io/ruth99/github-actions-pet-clinic
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  #tag: ""
 
 imagePullSecrets: 
-  name: internet-banking
+  name: azure-test
 nameOverride: ""
 fullnameOverride: ""
 
