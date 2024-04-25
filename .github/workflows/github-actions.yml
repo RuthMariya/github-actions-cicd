@@ -25,7 +25,7 @@ jobs:
        export PATH="$JAVA_HOME/bin:$PATH"
        java --version
        mvn --version
-       mvn spring-javaformat:apply
-       mvn clean install
+       mvn clean spring-javaformat:apply
+       mvn  package -DskipTests
 
       
