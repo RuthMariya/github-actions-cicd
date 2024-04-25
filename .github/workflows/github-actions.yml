@@ -8,13 +8,17 @@ jobs:
     steps:
     - name: code-checkout
       uses: actions/checkout@v4
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
+      
+    # - name: Set up JDK 17
+    #   uses: actions/setup-java@v4
+    #   with:
+    #     java-version: '17'
+        
     - name: build&test
       run: |
+       apt-get update
+       apt-get upgrade
+       apt install openjdk-17-jdk -y
        mvn spring-javaformat:apply
        mvn clean install
       
