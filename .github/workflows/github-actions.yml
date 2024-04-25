@@ -27,5 +27,9 @@ jobs:
        mvn --version
        mvn clean spring-javaformat:apply
        mvn  package -Dcheckstyle.skip
+    
+    - name: publish code coverage
+      run: |
+       
 
       
