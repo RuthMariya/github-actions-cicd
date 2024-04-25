@@ -16,8 +16,6 @@ jobs:
         
     - name: build&test
       run: |
-       apt-get update
-       apt-get upgrade
        apt install openjdk-17-jdk -y
        mvn spring-javaformat:apply
        mvn clean install
