@@ -8,15 +8,12 @@ jobs:
     steps:
     - name: code-checkout
       uses: actions/checkout@v4
-      
-    # - name: Set up JDK 17
-    #   uses: actions/setup-java@v4
-    #   with:
-    #     java-version: '17'
+    
         
     - name: build&test
       run: |
-       apt install openjdk-17-jdk -y
+       wget -c --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz
+       tar -xvf jdk-17_linux-x64_bin.tar.gz
        mvn spring-javaformat:apply
        mvn clean install
       
