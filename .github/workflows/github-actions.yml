@@ -26,6 +26,6 @@ jobs:
        java --version
        mvn --version
        mvn clean spring-javaformat:apply
-       mvn  package -DskipTests
+       mvn  package -Dcheckstyle.skip
 
       
