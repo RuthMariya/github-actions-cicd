@@ -19,6 +19,7 @@ jobs:
        export JAVA_HOME="jdk-17.0.10+7"
        export PATH="$JAVA_HOME/bin:$PATH"
        java --version
+       mvn --version
        mvn spring-javaformat:apply
        mvn clean install
 
