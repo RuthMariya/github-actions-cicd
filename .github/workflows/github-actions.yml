@@ -27,9 +27,10 @@ jobs:
        mvn --version
        mvn clean spring-javaformat:apply
        mvn  package -Dcheckstyle.skip
+       mvn jacoco:report
     
-    - name: publish code coverage
-      run: |
+    # - name: publish code coverage
+    #   run: echo "Code coverage report is available at ${{ github.workspace }}/coverage-report/index.html"
        
 
       
