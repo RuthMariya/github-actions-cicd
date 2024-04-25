@@ -1,0 +1,16 @@
+name: github_actions
+
+on: workflow_dispatch
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+    - name: code-checkout
+      uses: actions/checkout@v4
+
+    - name: build&test
+      run: |
+       mvn spring-javaformat:apply
+       mvn clean install
+      
