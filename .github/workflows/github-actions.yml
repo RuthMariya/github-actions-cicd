@@ -47,7 +47,7 @@ jobs:
       run: |
         curl \
           -X POST \
-          -H "Authorization: token ${{ secrets.SNYK_TOKEN }}" \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
           -H "Content-Type: application/zip" \
           --data-binary "@coverage-report.zip" \
