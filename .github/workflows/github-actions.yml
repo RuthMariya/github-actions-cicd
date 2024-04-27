@@ -31,9 +31,9 @@ jobs:
 
     - name: Archive coverage report
       run: |
-        mkdir coverage-report
-        cp target/jacoco.exec coverage-report/*
-        cp -r target/site/jacoco/* coverage-report/*
+        mkdir -p coverage-report
+        cp target/jacoco.exec coverage-report/
+        cp -r target/site/jacoco/* coverage-report/
     
     # - name: publish code coverage
     #   run: echo "Code coverage report is available at ${{ github.workspace }}/coverage-report/index.html"
