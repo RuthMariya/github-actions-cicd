@@ -39,6 +39,7 @@ jobs:
         cp target/**.jar coverage-report/
         cp target/jacoco.exec coverage-report/
         cp -r target/site/jacoco/* coverage-report/
+        ls -lrt
     
     - name: Zip coverage report
       run: zip -r coverage-report.zip coverage-report
