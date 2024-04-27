@@ -32,11 +32,21 @@ jobs:
     - name: Archive coverage report
       run: |
         mkdir -p coverage-report
+        cp target/**.jar coverage-report/
         cp target/jacoco.exec coverage-report/
         cp -r target/site/jacoco/* coverage-report/
     
-    # - name: publish code coverage
-    #   run: echo "Code coverage report is available at ${{ github.workspace }}/coverage-report/index.html"
-       
+    - name: Zip coverage report
+      run: zip -r coverage-report.zip coverage-report
+
+    - name: Upload coverage report
+      run: |
+        curl \
+          -X POST \
+          -H "Authorization: token ${{ secrets.SNYK_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Content-Type: application/zip" \
+          --data-binary "@coverage-report.zip" \
+          "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/coverage-report.zip"
 
       
