@@ -50,6 +50,8 @@ jobs:
 
     - name: Upload coverage report
       run: |
+        set -x  # Enable debug mode
+        echo "Uploading coverage report..."
         curl \
          -X POST \
          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
