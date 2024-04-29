@@ -56,8 +56,9 @@ jobs:
          -X POST \
          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
          -H "Accept: application/vnd.github.v3+json" \
+         --cookie "dummy_cookie=123456789" \
          -H "Content-Type: application/zip" \
          --data-binary "@./coverage-report.zip" \
-         "https://api.github.com/RuthMariya/github-actions-cicd/actions/artifacts"
+         "https://github.com/RuthMariya/github-actions-cicd/actions"
 
       
