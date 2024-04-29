@@ -59,6 +59,6 @@ jobs:
          --cookie "dummy_cookie=123456789" \
          -H "Content-Type: application/zip" \
          --data-binary "@./coverage-report.zip" \
-         "https://github.com/repos/RuthMariya/github-actions-cicd/actions/artifacts"
+         "https://api.github.com/repos/RuthMariya/github-actions-cicd/actions/artifacts"
 
       
