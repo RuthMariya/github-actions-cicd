@@ -58,6 +58,6 @@ jobs:
          -H "Accept: application/vnd.github.v3+json" \
          -H "Content-Type: application/zip" \
          --data-binary "@./coverage-report.zip" \
-         "https://github.com/RuthMariya/github-actions-cicd/actions"
+         "https://github.com/RuthMariya/github-actions-cicd/actions/runs/${{ github.run_id }}/artifacts"
 
       
