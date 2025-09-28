@@ -63,6 +63,7 @@ jobs:
     - name: Download CodeQL CLI
       run: |
           wget https://github.com/github/codeql-action/releases/latest/download/codeql-bundle-linux64.tar.gz
+          mkdir -p codeql
           tar --strip-components=1 -xzf codeql-bundle-linux64.tar.gz -C codeql
           ls -lrt
           ls -l codeql
