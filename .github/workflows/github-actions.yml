@@ -64,7 +64,8 @@ jobs:
       run: |
           wget https://github.com/github/codeql-action/releases/latest/download/codeql-bundle-linux64.tar.gz
           tar -xzf codeql-bundle-linux64.tar.gz
-          mv codeql-*/ codeql
+          ls -.l
+          mv codeql*/ codeql
           export PATH=$PWD/codeql:$PATH
           ./codeql --version
 
