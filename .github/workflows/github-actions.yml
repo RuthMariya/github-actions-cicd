@@ -6,7 +6,7 @@ jobs:
   CI:
     permissions:
         contents: write # for actions/checkout to fetch code
-        security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+        security-events: write # for codeql uploads
         actions: write
     runs-on: ubuntu-latest
     steps:
@@ -45,19 +45,41 @@ jobs:
         cd coverage-report/
         ls -lrt
     
-    - name: Zip coverage report
-      run: zip -r coverage-report.zip coverage-report
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.6.2
+      with:
+        name: build-artifact
+        path: |
+           target/*.jar
+           target/jacoco.exec
+           target/site/jacoco/*
 
-    - name: Upload coverage report
+    - name: Upload unit test report
+      uses: actions/upload-artifact@v4.6.2
+      with:
+        name: unit-test-report
+        path: target/surefire-reports/*
+          
+    - name: Download CodeQL CLI
       run: |
-        set -x  # Enable debug mode
-        echo "Uploading coverage report..."
-        curl \
-         -X POST \
-         -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-         -H "Accept: application/vnd.github.v3+json" \
-         -H "Content-Type: application/zip" \
-         --data-binary "@./coverage-report.zip" \
-         "https://github.com/RuthMariya/github-actions-cicd/actions/runs/${{ github.run_id }}/artifacts"
+          wget https://github.com/github/codeql-action/releases/latest/download/codeql-bundle-linux64.tar.gz
+          tar -xzf codeql-bundle-linux64.tar.gz
+          mv codeql* codeql
+          export PATH=$PWD/codeql:$PATH
+          ./codeql --version
 
-      
+    - name: Create CodeQL database
+      run: |
+          ./codeql database create codeql-db \
+            --language=java \
+            --source-root=$PWD
+
+    - name: Analyze with CodeQL
+      run: |
+          ./codeql database analyze codeql-db \
+            --format=sarif-latest \
+            --output=results.sarif
+    - name: Upload CodeQL SARIF
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+          sarif_file: results.sarif
