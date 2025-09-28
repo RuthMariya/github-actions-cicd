@@ -73,13 +73,14 @@ jobs:
 
     - name: Create CodeQL database
       run: |
-          ./codeql database create codeql-db \
+          export PATH=$PWD/codeql:$PATH
+          $PWD/codeql/codeql database create codeql-db \
             --language=java \
             --source-root=$PWD
 
     - name: Analyze with CodeQL
       run: |
-          ./codeql database analyze codeql-db \
+          $PWD/codeql/codeql database analyze codeql-db \
             --format=sarif-latest \
             --output=results.sarif
     - name: Upload CodeQL SARIF
