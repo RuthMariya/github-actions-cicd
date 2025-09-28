@@ -23,8 +23,8 @@ jobs:
        tar xzvf OpenJDK17U-jdk_x64_linux_hotspot_17.0.10_7.tar.gz
        export JAVA_HOME=jdk-17.0.10+7
        wget https://dlcdn.apache.org/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.tar.gz
-       tar -xvf apache-maven-3.9.6-bin.tar.gz
-       export MAVEN_HOME="apache-maven-3.9.6"
+       tar -xvf apache-maven-3.9.11-bin.tar.gz
+       export MAVEN_HOME="apache-maven-3.9.11"
        export PATH="$MAVEN_HOME/bin:$PATH"
        export PATH="$JAVA_HOME/bin:$PATH"
        java --version
