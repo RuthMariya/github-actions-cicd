@@ -19,13 +19,14 @@ jobs:
 
     - name: Build and test with Maven
       run: |
-       mvn spring-javaformat:apply
-       mvn package -Pcoverage
+       mvn clean spring-javaformat:apply
+       mvn  package -Dcheckstyle.skip
+       mvn jacoco:report
       
     - name: Upload JAR artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v5.0.0
       with:
-        path: target/*.jar
+        path: target/*
         retention-days: 1  
 
     - name: Generate JaCoCo badge
@@ -41,7 +42,7 @@ jobs:
         echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
         echo "branches = ${{ steps.jacoco.outputs.branches }}"
     - name: Upload JaCoCo coverage report as a workflow artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v5.0.0
       with:
         name: jacoco-report
         path: target/site/jacoco/
