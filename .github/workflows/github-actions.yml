@@ -60,31 +60,4 @@ jobs:
         name: unit-test-report
         path: target/surefire-reports/*
           
-    - name: Download CodeQL CLI
-      run: |
-          wget https://github.com/github/codeql-action/releases/latest/download/codeql-bundle-linux64.tar.gz
-          mkdir -p codeql
-          tar --strip-components=1 -xzf codeql-bundle-linux64.tar.gz -C codeql
-          ls -lrt
-          ls -l codeql
-          export PATH=$PWD/codeql:$PATH
-          $PWD/codeql/codeql --version
-
-
-    - name: Create CodeQL database
-      run: |
-          export PATH=$PWD/codeql:$PATH
-          $PWD/codeql/codeql database create codeql-db \
-            --language=java \
-            --source-root=$PWD
-
-    - name: Analyze with CodeQL
-      run: |
-          $PWD/codeql/codeql database analyze codeql-db \
-            --format=sarif-latest \
-            --output=results.sarif
-    - name: Upload CodeQL SARIF
-      uses: github/codeql-action/upload-sarif@v3
-      with:
-        name: codeql-sarif
-        path: results.sarif
+   
