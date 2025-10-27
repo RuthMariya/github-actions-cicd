@@ -77,38 +77,51 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Set execute permission for mvnw
-        run: chmod +x mvnw
-      - name: Download CodeQL CLI
-        run: |
-              wget https://github.com/github/codeql-action/releases/latest/download/codeql-bundle-linux64.tar.gz
-              mkdir -p codeql
-              tar --strip-components=1 -xzf codeql-bundle-linux64.tar.gz -C codeql
-              ls -lrt
-              ls -l codeql
-              export PATH=$PWD/codeql:$PATH
-              $PWD/codeql/codeql --version
-      - name: Create CodeQL database
-        run: |
-            export PATH=$PWD/codeql:$PATH
-            $PWD/codeql/codeql database create codeql-db \
-            --language=java \
-            --source-root=$PWD \
-            --command="./mvnw clean spring-javaformat:apply -DskipTests -Dcheckstyle.skip"
-            # $PWD/codeql/codeql database create codeql-db \
-            #   --language=java \
-            #   --source-root=$PWD
-      - name: Analyze with CodeQL
-        run: |
-            $PWD/codeql/codeql database analyze codeql-db \
-              --format=sarif-latest \
-              --output=results.sarif
+      # - name: Set execute permission for mvnw
+      #   run: chmod +x mvnw
+      # - name: Download CodeQL CLI
+      #   run: |
+      #         wget https://github.com/github/codeql-action/releases/latest/download/codeql-bundle-linux64.tar.gz
+      #         mkdir -p codeql
+      #         tar --strip-components=1 -xzf codeql-bundle-linux64.tar.gz -C codeql
+      #         ls -lrt
+      #         ls -l codeql
+      #         export PATH=$PWD/codeql:$PATH
+      #         $PWD/codeql/codeql --version
+      # - name: Create CodeQL database
+      #   run: |
+      #       export PATH=$PWD/codeql:$PATH
+      #       $PWD/codeql/codeql database create codeql-db \
+      #       --language=java \
+      #       --source-root=$PWD \
+      #       --command="./mvnw clean compile spring-javaformat:apply -DskipTests -Dcheckstyle.skip"
+      #       # $PWD/codeql/codeql database create codeql-db \
+      #       #   --language=java \
+      #       #   --source-root=$PWD
+      # - name: Analyze with CodeQL
+      #   run: |
+      #       $PWD/codeql/codeql database analyze codeql-db \
+      #         --format=sarif-latest \
+      #         --output=results.sarif
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: java
+      
+      - name: Build project
+        run: ./mvnw clean compile -DskipTests
+      
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          output: codeql-results
+
             
       - name: Upload CodeQL SARIF
-        uses: github/codeql-action/upload-sarif@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: codeql-sarif
-          path: results.sarif
+          name: codeql-sarif-results
+          path: codeql-results
       # - name: Run Snyk to check for vulnerabilities
       #   uses: snyk/actions/maven@master
       #   continue-on-error: true
