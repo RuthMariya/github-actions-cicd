@@ -96,9 +96,14 @@ jobs:
               --source-root=$PWD
       - name: Analyze with CodeQL
         run: |
-            $PWD/codeql/codeql database analyze codeql-db \
-              --format=sarif-latest \
-              --output=results.sarif
+            # $PWD/codeql/codeql database analyze codeql-db \
+            #   --format=sarif-latest \
+            #   --output=results.sarif
+            export PATH=$PWD/codeql:$PATH
+            $PWD/codeql/codeql database create codeql-db \
+            --language=java \
+            --source-root=$PWD \
+            --command="./mvnw clean package -DskipTests"
       - name: Upload CodeQL SARIF
         uses: github/codeql-action/upload-sarif@v3
         with:
