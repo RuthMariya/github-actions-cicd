@@ -103,7 +103,7 @@ jobs:
             $PWD/codeql/codeql database create codeql-db \
             --language=java \
             --source-root=$PWD \
-            --command="./mvnw clean package -DskipTests -Dcheckstyle.skip"
+            --command="./mvnw clean spring-javaformat:apply -DskipTests -Dcheckstyle.skip"
       - name: Upload CodeQL SARIF
         uses: github/codeql-action/upload-sarif@v3
         with:
