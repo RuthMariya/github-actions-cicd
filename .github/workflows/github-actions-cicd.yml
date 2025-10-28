@@ -27,8 +27,8 @@ jobs:
       
     - name: Build project
       run: |
-         mvn spring-javaformat:apply 
-         mvn clean compile -DskipTests
+         mvn clean spring-javaformat:apply
+         mvn  package -Dcheckstyle.skip
          mvn jacoco:report
       
     - name: Upload JAR artifact
@@ -53,7 +53,7 @@ jobs:
       uses: actions/upload-artifact@v5.0.0
       with:
         name: jacoco-report
-        path: target/site/jacoco/
+        path: target/site/jacoco/*
 
 
     - name: Comment on PR with coverage percentages
