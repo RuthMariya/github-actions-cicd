@@ -109,7 +109,9 @@ jobs:
           languages: java
       
       - name: Build project
-        run: ./mvnw clean compile spring-javaformat:apply -DskipTests
+        run: |
+           mvn spring-javaformat:apply 
+           mvn clean compile -DskipTests
       
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
