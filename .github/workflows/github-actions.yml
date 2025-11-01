@@ -19,19 +19,64 @@ jobs:
         JAVA_HOME: "jdk-17.0.10+7"
         MAVEN_HOME: "apache-maven-3.9.6"
       run: |
-       wget https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.10%2B7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.10_7.tar.gz
-       tar xzvf OpenJDK17U-jdk_x64_linux_hotspot_17.0.10_7.tar.gz
-       export JAVA_HOME=jdk-17.0.10+7
-       wget https://dlcdn.apache.org/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.tar.gz
-       tar -xvf apache-maven-3.9.11-bin.tar.gz
-       export MAVEN_HOME="apache-maven-3.9.11"
-       export PATH="$MAVEN_HOME/bin:$PATH"
-       export PATH="$JAVA_HOME/bin:$PATH"
-       java --version
-       mvn --version
-       mvn clean spring-javaformat:apply
-       mvn  package -Dcheckstyle.skip
-       mvn jacoco:report
+        set -e
+        
+        # ---------- JAVA SETUP ----------
+        JAVA_DIR="jdk-17.0.10+7"
+        JAVA_TAR="OpenJDK17U-jdk_x64_linux_hotspot_17.0.10_7.tar.gz"
+        JAVA_URL="https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.10%2B7/${JAVA_TAR}"
+        
+        if [ ! -d "$JAVA_DIR" ]; then
+          echo "🔹 Java not found, downloading..."
+          wget -q "$JAVA_URL"
+          tar xzvf "$JAVA_TAR"
+        else
+          echo "✅ Java already present, skipping download."
+        fi
+        
+        export JAVA_HOME="$PWD/$JAVA_DIR"
+        export PATH="$JAVA_HOME/bin:$PATH"
+        
+        # ---------- MAVEN SETUP ----------
+        MAVEN_DIR="apache-maven-3.9.6"
+        MAVEN_TAR="apache-maven-3.9.6-bin.tar.gz"
+        MAVEN_URL="https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/${MAVEN_TAR}"
+        
+        if [ ! -d "$MAVEN_DIR" ]; then
+          echo "🔹 Maven not found, downloading..."
+          wget -q "$MAVEN_URL"
+          tar -xvf "$MAVEN_TAR"
+        else
+          echo "✅ Maven already present, skipping download."
+        fi
+        
+        export MAVEN_HOME="$PWD/$MAVEN_DIR"
+        export PATH="$MAVEN_HOME/bin:$PATH"
+        
+        # ---------- VERIFY INSTALL ----------
+        echo "🧩 Verifying tools..."
+        java --version
+        mvn --version
+        
+        # ---------- MAVEN BUILD ----------
+        echo "🚀 Running Maven build..."
+        mvn clean spring-javaformat:apply
+        mvn package -Dcheckstyle.skip
+        mvn jacoco:report
+
+       # wget https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.10%2B7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.10_7.tar.gz
+       # tar xzvf OpenJDK17U-jdk_x64_linux_hotspot_17.0.10_7.tar.gz
+       # export JAVA_HOME=jdk-17.0.10+7
+       # wget https://dlcdn.apache.org/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.tar.gz
+       # tar -xvf apache-maven-3.9.11-bin.tar.gz
+       # export MAVEN_HOME="apache-maven-3.9.11"
+       # export PATH="$MAVEN_HOME/bin:$PATH"
+       # export PATH="$JAVA_HOME/bin:$PATH"
+       # java --version
+       # mvn --version
+       # mvn clean spring-javaformat:apply
+       # mvn  package -Dcheckstyle.skip
+       # mvn jacoco:report
 
     - name: Archive coverage report
       run: |
